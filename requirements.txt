@@ -1,0 +1,10 @@
+flask
+
+python-dotenv
+
+pandas
+
+jsonify
+
+gunicorn==20.1.0
+	

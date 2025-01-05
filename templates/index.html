@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cotizador de Autos - CARLO.PE</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="static/css/style.css">
+</head>
+<body>
+    <nav>
+        <img src="https://carlo.pe/img/logo-svg.png" alt="Logo" class="nav-logo">
+        <ul class="right">
+            <li><a href="#compra">Comprar un auto</a></li>
+            <li><a href="#vende">Vender mi auto</a></li>
+            <li><a href="#cambia">Servicios</a></li>
+            <li><a href="#favoritos">Subastas</a></li>
+            <li><a href="#inicia-sesion">Mi cuenta</a></li>
+        </ul>
+    </nav>
+    <div class="container" id="cotizarFormContainer">
+        <form id="cotizarForm">
+            <div class="form-group">
+                <label for="nombreCliente">Nombre de cliente:</label>
+                <input type="text" id="nombreCliente" name="nombreCliente" required><br><br>
+            </div>
+            <div class="form-group">
+                <label for="pvp_mercado">PVP Mercado:</label>
+                <input type="text" id="pvp_mercado" name="pvp_mercado" required><br><br>
+            </div>
+            <div class="form-group">
+                <label for="kilometraje">Kilometraje:</label>
+                <input type="text" id="kilometraje" name="kilometraje" required><br><br>
+            </div>
+            <div class="form-group">
+                <label for="rotacion">Rotación:</label>
+                <select id="rotacion" name="rotacion" required>
+                    <option value="" disabled selected>Seleccione una opción</option>
+                    <option value="Baja">Baja</option>
+                    <option value="Media">Media</option>
+                    <option value="Alta">Alta</option>
+                </select><br><br>
+            </div>
+            <div class="form-group">
+                <label for="tipo_auto">Tipo de auto:</label>
+                <select id="tipo_auto" name="tipo_auto" required>
+                    <option value="" disabled selected>Seleccione una opción</option>
+                    <option value="Comercial">Comercial</option>
+                    <option value="Lujo">Lujo</option>
+                </select><br><br>
+            </div>
+            <button type="submit">Cotizar</button>
+        </form>
+    </div>
+    <div id="resultadoCotizacion" class="result-container" style="display: none;">
+        <div class="mensaje">
+            <h2>¡<span id="clienteNombre"></span>, muchas gracias por pedir una cotización!</h2>
+        </div>
+        <div class="result">
+            <div class="result-box">
+                <h3>Precio Inmediato</h3>
+                <p class="precio">$<span id="valorFinal"></span></p>
+                <p class="mensaje-morado">Obtén un precio justo y vende tu auto de manera rápida y sencilla. Te ofrecemos una tasación justa y un proceso sin complicaciones.</p>
+                <button id="btnInteresa">Quiero Vender</button>
+            </div>
+            <div class="result-box">
+                <h3>Precio Subasta</h3>
+                <p class="precio">
+                    $<span id="valorPartePago"></span> - $<span id="valorPartePago2"></span>
+                </p>
+                <p class="mensaje-morado">Obtén una oferta mejorada al dejar tu auto actual como parte de pago. Maximiza el valor de tu auto al realizar la transacción.</p>
+                <button id="btnInteresa">Me Interesa</button>
+            </div>
+            <div class="result-box">
+                <h3>Oferta máxima</h3>
+                <p class="precio">$<span id="valorOfertaMaxima"></span></p>
+                <p class="mensaje-morado">Vende tu auto hoy mismo, obtén esta oferta por el día de hoy con pago inmediato.</p>
+                <button id="btnInteresa">Elegir Oferta</button>
+            </div>
+        </div>
+        <p class="mensaje-behind"> *Esta oferta esta sujeta a inspección antes de la transacción final.</p>
+    </div>
+    <div class="green-bar">
+        <p>SOLICITA TU INSPECCIÓN Y RECIBE EL PAGO DE LA OFERTA ELEGIDA</p>
+        <button>SOLICITAR INSPECCIÓN</button>
+    </div>
+    <footer class="footer">
+        <div class="footer-content">
+            <div class="footer-section image-section">
+                <img src="https://carlo.pe/img/footer/Logo-svg.png" alt="Logo" class="nav-logo">
+            </div>
+            <div class="footer-links">
+                <div class="footer-section links">
+                    <h3>NOSOTROS</h3>
+                    <ul>
+                        <li><a href="#historia">Conoce nuestra historia</a></li>
+                    </ul>
+                </div>
+                <div class="footer-section links">
+                    <h3>SOLUCIONES</h3>
+                    <ul>
+                        <li><a href="#compra">Compra tu auto</a></li>
+                        <li><a href="#vende">Vende tu auto</a></li>
+                    </ul>
+                </div>
+                <div class="footer-section links">
+                    <h3>LEGAL</h3>
+                    <ul>
+                        <li><a href="#terminos">Términos y condiciones</a></li>
+                        <li><a href="#privacidad">Políticas de privacidad</a></li>
+                    </ul>
+                </div>
+                <div class="footer-section contact">
+                    <h3>CONTACTA</h3>
+                    <ul>
+                        <li><a href="mailto:contacto@carlo.pe">contacto@carlo.pe</a></li>
+                        <li><a href="tel:+51934140910">+51 934 140 910</a></li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <p>&copy; 2024 CARLO. Todos los derechos reservados.  -Cesar Morales-</p>
+        </div>
+    </footer>
+    <script>
+        function formatNumberWithDots(input) {
+            // Elimina puntos existentes
+            let value = input.value.replace(/\./g, '');
+            
+            // Verifica si el valor es un número
+            if (!isNaN(value) && value !== '') {
+                // Formatea el número con puntos
+                let formattedValue = parseFloat(value).toLocaleString('de-DE');
+                
+                // Actualiza el valor del campo de entrada
+                input.value = formattedValue;
+            }
+        }
+    
+        document.getElementById('pvp_mercado').addEventListener('input', function() {
+            formatNumberWithDots(this);
+        });
+    
+        document.getElementById('kilometraje').addEventListener('input', function() {
+            formatNumberWithDots(this);
+        });
+    
+        document.getElementById('cotizarForm').addEventListener('submit', function(event) {
+            event.preventDefault(); // Previene el envío del formulario
+    
+            // Obtén los datos del formulario
+            const formData = new FormData(this);
+    
+            // Realiza la solicitud AJAX
+            fetch('/cotizar', {
+                method: 'POST',
+                body: formData
+            })
+            .then(response => response.json())
+            .then(data => {
+                // Formatea los valores con puntos como separadores de miles
+                const valorFinal = parseFloat(data.valor_final).toLocaleString('de-DE', { minimumFractionDigits: 0 });
+                const valorPartePago = Math.round(data.valor_partepago).toLocaleString('de-DE');
+                const valorPartePago2 = Math.round(data.valor_partepago2).toLocaleString('de-DE');
+                const valorOfertaMaxima = Math.round(data.valor_oferta_maxima).toLocaleString('de-DE');
+    
+                // Muestra el resultado
+                document.getElementById('clienteNombre').textContent = formData.get('nombreCliente'); // Obtener el nombre del cliente desde el formulario
+                document.getElementById('valorFinal').textContent = valorFinal;
+                document.getElementById('valorPartePago').textContent = valorPartePago;
+                document.getElementById('valorPartePago2').textContent = valorPartePago2;
+                document.getElementById('valorOfertaMaxima').textContent = valorOfertaMaxima;
+                document.getElementById('resultadoCotizacion').style.display = 'block';
+                document.getElementById('cotizarFormContainer').style.display = 'none'; // Oculta el formulario
+            })
+            .catch(error => {
+                console.error('Error:', error);     
+            });
+        });
+    </script>    
+</body>
+</html>
